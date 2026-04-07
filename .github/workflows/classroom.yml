@@ -1,0 +1,38 @@
+name: Classroom Autograding
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Lab1 Core Tests
+        run: |
+          python -m unittest discover -s lab1_core/tests -p "test_*.py" -v
+
+      - name: Run Lab2 Bonus Tests (non-blocking)
+        id: lab2_bonus
+        continue-on-error: true
+        run: |
+          python -m unittest discover -s lab2_bonus/tests -p "test_*.py" -v
+
+      - name: Bonus Summary
+        if: always()
+        run: |
+          echo "Lab2 bonus outcome: ${{ steps.lab2_bonus.outcome }}" >> "$GITHUB_STEP_SUMMARY"

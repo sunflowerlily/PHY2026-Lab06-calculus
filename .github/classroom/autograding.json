@@ -1,0 +1,7 @@
+{
+  "protected_files": [
+    ".github/workflows/classroom.yml",
+    "lab1_core/tests/test_core.py",
+    "lab2_bonus/tests/test_bonus.py"
+  ]
+}
