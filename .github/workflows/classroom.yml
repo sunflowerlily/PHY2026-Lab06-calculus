@@ -22,15 +22,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Lab1 Core Tests
+      - name: Run Task A Tests (23)
         run: |
-          python -m unittest discover -s lab1_core/tests -p "test_*.py" -v
+          python -m unittest discover -s lab1_core/tests -p "test_task_a.py" -v
 
-      - name: Run Lab2 Bonus Tests (non-blocking)
+      - name: Run Task B Tests (24)
+        run: |
+          python -m unittest discover -s lab1_core/tests -p "test_task_b.py" -v
+
+      - name: Run Task C Tests (23)
+        run: |
+          python -m unittest discover -s lab1_core/tests -p "test_task_c.py" -v
+
+      - name: Run Bonus Tests (30, non-blocking)
         id: lab2_bonus
         continue-on-error: true
         run: |
-          python -m unittest discover -s lab2_bonus/tests -p "test_*.py" -v
+          python -m unittest discover -s lab2_bonus/tests -p "test_bonus.py" -v
 
       - name: Bonus Summary
         if: always()
