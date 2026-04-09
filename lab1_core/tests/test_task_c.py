@@ -21,7 +21,10 @@ class TestTaskC(unittest.TestCase):
     def test_axis_consistency_points_8(self):
         z = 0.8
         v_true = axis_potential_analytic(z, a=1.0, q=1.0)
-        v_num = ring_potential_point(0.0, 0.0, z, a=1.0, q=1.0, n_phi=2000)
+        try:
+            v_num = ring_potential_point(0.0, 0.0, z, a=1.0, q=1.0, n_phi=2000)
+        except NotImplementedError as exc:
+            self.fail(f"TODO C1 未完成: {exc}")
         self.assertLess(abs(v_num - v_true), 5e-3)
 
     def test_grid_shape_points_7(self):

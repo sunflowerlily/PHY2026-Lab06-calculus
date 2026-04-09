@@ -17,13 +17,24 @@ class TestTaskB(unittest.TestCase):
         self.assertLess(abs(val - 1.0 / 3.0), 1e-4)
 
     def test_simpson_even_constraint_points_8(self):
-        with self.assertRaises(ValueError):
+        try:
             simpson_composite(lambda x: x, 0.0, 1.0, 101)
+        except NotImplementedError as exc:
+            self.fail(f"TODO B2 未完成: {exc}")
+        except ValueError:
+            return
+        self.fail("simpson_composite 应在 n 为奇数时抛出 ValueError")
 
     def test_simpson_outperforms_trap_points_8(self):
         f = lambda x: x**4
-        t = trapezoid_composite(f, 0.0, 1.0, 100)
-        s = simpson_composite(f, 0.0, 1.0, 100)
+        try:
+            t = trapezoid_composite(f, 0.0, 1.0, 100)
+        except NotImplementedError as exc:
+            self.fail(f"TODO B1 未完成: {exc}")
+        try:
+            s = simpson_composite(f, 0.0, 1.0, 100)
+        except NotImplementedError as exc:
+            self.fail(f"TODO B2 未完成: {exc}")
         self.assertLess(abs(s - 0.2), abs(t - 0.2))
 
     def test_debye_integral_positive_points_8(self):
