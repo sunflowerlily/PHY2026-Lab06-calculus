@@ -1,7 +1,9 @@
 {
   "protected_files": [
     ".github/workflows/classroom.yml",
-    "lab1_core/tests/test_core.py",
+    "lab1_core/tests/test_task_a.py",
+    "lab1_core/tests/test_task_b.py",
+    "lab1_core/tests/test_task_c.py",
     "lab2_bonus/tests/test_bonus.py"
   ]
 }

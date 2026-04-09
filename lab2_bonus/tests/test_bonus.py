@@ -6,28 +6,31 @@ import numpy as np
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
-from advanced_model import debye_integrand, gauss_legendre_integrate, debye_cv
+from bonus_plate_gravity import force_curve, gauss_legendre_2d, plate_force_z
 
 
-class TestWeek06Bonus(unittest.TestCase):
-    def test_integrand_zero_limit_points_8(self):
-        v = debye_integrand(np.array([0.0]))[0]
-        self.assertAlmostEqual(v, 1.0, places=8)
-
-    def test_gauss_integrate_polynomial_points_12(self):
+class TestBonus(unittest.TestCase):
+    def test_gauss_2d_constant_points_10(self):
         try:
-            val = gauss_legendre_integrate(lambda x: x**4, 0.0, 1.0, 8)
+            val = gauss_legendre_2d(lambda x, y: 1.0, -1.0, 1.0, -2.0, 2.0, n=20)
         except NotImplementedError as exc:
             self.fail(f"TODO D1 未完成: {exc}")
-        self.assertLess(abs(val - 0.2), 1e-12)
+        self.assertLess(abs(val - 8.0), 1e-10)
 
-    def test_debye_monotonic_points_10(self):
+    def test_force_positive_points_10(self):
         try:
-            c1 = debye_cv(20.0)
-            c2 = debye_cv(80.0)
+            fz = plate_force_z(1.0, L=10.0, M_plate=1.0e4, m_particle=1.0, n=30)
         except NotImplementedError as exc:
             self.fail(f"TODO D2 未完成: {exc}")
-        self.assertGreater(c2, c1)
+        self.assertGreater(fz, 0.0)
+
+    def test_force_curve_shape_points_10(self):
+        z_vals = np.array([0.2, 1.0, 5.0])
+        try:
+            f_vals = force_curve(z_vals, L=10.0, M_plate=1.0e4, m_particle=1.0, n=20)
+        except NotImplementedError as exc:
+            self.fail(f"TODO D3 未完成: {exc}")
+        self.assertEqual(f_vals.shape, z_vals.shape)
 
 
 if __name__ == "__main__":
